@@ -7,7 +7,7 @@ const searchButton = () => {
 
     const searchText = (input.value);
     if (searchText == "") { //check  string 
-        error.innerText = "please give a string";
+        error.innerText = "please give a value";
         input.value = "";
         main.innerHTML = "";
     }
@@ -16,7 +16,7 @@ const searchButton = () => {
         main.innerHTML = "";
         fetch(`https://openapi.programming-hero.com/api/phones?search=${searchText}`)
             .then(res => res.json())
-            .then(data => phonesDisplay(data.data))
+            .then(data => phonesDisplay(data))
 
         input.value = "";
         error.innerHTML = ""
@@ -24,7 +24,8 @@ const searchButton = () => {
 }
 
 const phonesDisplay = (data) => {
-    console.log(data);
+    //console.log(data);
+    data = data.data;
     for (const datas of data) {
         console.log(datas);
         const div = document.createElement("div");
@@ -44,10 +45,30 @@ const phonesDisplay = (data) => {
     }
 }
 
-const phoneDetails = (slug) => {
-    console.log("clicked");
-    fetch(`https://openapi.programming-hero.com/api/phones?search=${slug}`)
+const phoneDetails = id => {
+    console.log(id);
+
+    fetch(` https://openapi.programming-hero.com/api/phone/${id}`)
         .then(res => res.json())
-        .then(data => console.log(data.data[0]));
+        .then(data => {
+            const productDetails = data.data;
+            console.log(productDetails);
+            const div = document.createElement("div");
+            main.innerHTML = "";
+            div.innerHTML = `
+                <div class="card" style="width: 18rem;">
+                    <img src="${productDetails.image}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">${productDetails.name}</h5>
+                        <p class="card-text">${productDetails.brand}</p>
+                        <p class="card-text">${productDetails.slug}</p>
+                        <p class="card-text">${productDetails.mainFeatures.storage}</p>
+                        <p class="card-text">${productDetails.mainFeatures.sensors}</p>
+                    </div>
+                </div>
+            `
+            main.appendChild(div)
+
+        })
 
 }
