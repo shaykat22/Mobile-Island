@@ -1,4 +1,4 @@
-console.log('hello');
+
 const main = document.getElementById("main");
 const searchButton = () => {
     const input = document.getElementById("input-value");
@@ -16,7 +16,16 @@ const searchButton = () => {
         main.innerHTML = "";
         fetch(`https://openapi.programming-hero.com/api/phones?search=${searchText}`)
             .then(res => res.json())
-            .then(data => phonesDisplay(data))
+            .then(data => {
+                if (data.data.length != 0) {
+                    phonesDisplay(data)
+                }
+                else {
+                    error.innerText = "Data not found";
+                }
+            })
+
+
 
         input.value = "";
         error.innerHTML = ""
