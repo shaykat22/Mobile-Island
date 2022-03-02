@@ -1,0 +1,36 @@
+#phone-text{
+    color: rgba(107, 12, 32, 0.863);
+}
+.bod{
+   background-color:  #e6758f;
+    /* background: linear-gradient(to left  , #e26482 0%, #c25f32f8 100%); */
+}
+
+.btn_style {
+    color: black;
+    background-color: whitesmoke;
+    border-radius: 3px;
+    border: 1px solid #ee5100;
+    padding: 8px 20px;
+  }
+  .btn_style:hover {
+    color: white;
+    background: linear-gradient(to bottom, rgba(211, 6, 40, 0.863) 0%, #83085af6 100%);
+  }
+
+.nav{
+    
+    color: white;
+    background:  #262f35;
+    height: 60px;
+    margin-bottom: 8px;
+}
+.radius{
+    border-radius: 12px;
+}
+#input-value{
+    border: 1px solid #ee5100;
+}
+#input-value:focus{
+    box-shadow: 1px 1px 5px rgb(9, 14, 27);
+}

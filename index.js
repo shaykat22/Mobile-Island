@@ -1,17 +1,13 @@
-
 const main = document.getElementById("main");
 const searchButton = () => {
     const input = document.getElementById("input-value");
     const error = document.getElementById("error");
-
-
-    const searchText = (input.value);
-    if (searchText == "") { //check empty string 
+    const searchText = (input.value.toLowerCase());
+    if (searchText === "") { //check empty string 
         error.innerText = "please give a value";
         input.value = "";
         main.innerHTML = "";
     }
-
     else {
         main.innerHTML = "";
         fetch(`https://openapi.programming-hero.com/api/phones?search=${searchText}`)
@@ -24,9 +20,6 @@ const searchButton = () => {
                     error.innerText = "Data not found";
                 }
             })
-
-
-
         input.value = "";
         error.innerHTML = ""
     }
@@ -34,33 +27,27 @@ const searchButton = () => {
 
 const phonesDisplay = (phoneData) => {
 
-    phoneData = phoneData.data;
-    console.log(phoneData);
-    let count = 0;
+    phoneData = phoneData.data.slice(0, 20);//showing first 20 result of search data
+    //console.log(phoneData);
 
     for (const datas of phoneData) {
-        count = count + 1;
-        if (count <= 20) {
-            // console.log(datas);
-            const div = document.createElement("div");
-            div.classList.add("col-lg-4")
-            div.classList.add("mb-5")
-            div.innerHTML = `
-            <div class="phones" style="width: 18rem;">
-                 <img src="${datas.image}" class="phones-img-top" alt="...">
+        const div = document.createElement("div");
+        div.classList.add("col-lg-4")
+        div.classList.add("mb-5")
+        div.innerHTML = `
+            
+            <div class="phones text-light" style="width: 18rem;">
+                 <img src="${datas.image}" class="phones-img-top w-50 radius" alt="...">
                  <div class="phones-body">
                  <h5 class="phones-title">${datas.phone_name}</h5>
                 <p class="phones-text">${datas.brand}</p>
-                <button onclick="phoneDetails('${datas.slug}')" class="btn btn-primary">See Details</button>
+                <button onclick="phoneDetails('${datas.slug}')" class="btn_style">See Details</button>
              </div>
             </div>
              `
-            main.appendChild(div)
-        }
-
+        main.appendChild(div)
     }
 }
-
 const phoneDetails = id => {
     console.log(id);
 
@@ -70,24 +57,29 @@ const phoneDetails = id => {
             const productDetails = data.data;
             console.log(productDetails);
             const div = document.createElement("div");
+            div.classList.add('modal-dialog')
             main.innerHTML = "";
             div.innerHTML = `
         
-            <div class="card flex " style="width: 18rem;">
-                    <img src="${productDetails.image}" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">${productDetails.name}</h5>
-                        <p class="card-text">${productDetails.brand}</p>
-                        <p class="card-text">${productDetails.releaseDate}</p>
+            <div class="row  ">
+            <div class = 'col-lg-6'>
+            <img src="${productDetails.image}" class="card-img-top w-75 radius img-fluid " alt="...">
+            <h5 id ="phone-text" class="card-title text-light">${productDetails.name}</h5>
+            <p class="card-text text-light">${productDetails.brand}</p> 
+            </div>
+            <div class = "col-lg-6">       
+                    <div class="card-body text-light">                        
+                        <p class="card-text">${productDetails?.releaseDate || 'Release Date Not Decicded'}</p> 
                         <p class="card-text">${productDetails.mainFeatures.storage}</p>
                         <p class="card-text">${productDetails.mainFeatures.sensors}</p>
-                        <p class="card-text">${productDetails.slug}</p>
+                        
                     </div>
                 </div>
-                
-            `
+            </div>  
+            `;
             main.appendChild(div)
 
         })
 
-}
+
+};
