@@ -44,7 +44,7 @@ const phonesDisplay = (phoneData) => {
                  <div class="phones-body">
                  <h5 class="phones-title">${datas.phone_name}</h5>
                 <p class="phones-text">${datas.brand}</p>
-                <button onclick="phoneDetails('${datas.slug}')" class="btn_style">See Details</button>
+                <a href='#input-value' onclick="phoneDetails('${datas.slug}')" class="btn_style">See Details</a>
              </div>
             </div>
          </div>    `

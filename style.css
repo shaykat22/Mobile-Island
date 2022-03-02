@@ -12,6 +12,7 @@
     border-radius: 3px;
     border: 1px solid #ee5100;
     padding: 8px 20px;
+    text-decoration: none;
   }
   .btn_style:hover {
     color: white;
