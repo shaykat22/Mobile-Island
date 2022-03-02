@@ -35,8 +35,8 @@ const phonesDisplay = (phoneData) => {
         div.classList.add("col-lg-4")
         div.classList.add("mb-5")
         div.innerHTML = `
-            
-            <div class="phones text-light" style="width: 18rem;">
+        <div class="d-flex justify-content-centerd-flex justify-content-center">
+            <div class="phones  text-light" style="width: 18rem;">
                  <img src="${datas.image}" class="phones-img-top w-50 radius" alt="...">
                  <div class="phones-body">
                  <h5 class="phones-title">${datas.phone_name}</h5>
@@ -44,7 +44,7 @@ const phonesDisplay = (phoneData) => {
                 <button onclick="phoneDetails('${datas.slug}')" class="btn_style">See Details</button>
              </div>
             </div>
-             `
+         </div>    `
         main.appendChild(div)
     }
 }
@@ -55,10 +55,11 @@ const phoneDetails = id => {
         .then(res => res.json())
         .then(data => {
             const productDetails = data.data;
+            const singleDetails = document.getElementById('phone-details')
             console.log(productDetails);
             const div = document.createElement("div");
-            div.classList.add('modal-dialog')
-            main.innerHTML = "";
+            div.classList.add('card')
+            //main.innerHTML = "";
             div.innerHTML = `
         
             <div class="row  ">
@@ -69,17 +70,23 @@ const phoneDetails = id => {
             </div>
             <div class = "col-lg-6">       
                     <div class="card-body text-light">                        
-                        <p class="card-text">${productDetails?.releaseDate || 'Release Date Not Decicded'}</p> 
-                        <p class="card-text">${productDetails.mainFeatures.storage}</p>
-                        <p class="card-text">${productDetails.mainFeatures.sensors}</p>
+                        <p class="card-text"> <span class="text-title">Chipset:</span> ${productDetails?.releaseDate || 'Release Date Not Decicded'}</p> 
+                        <p class="card-text">${productDetails.mainFeatures?.displaySize || 'Not found'}</p>
+                        <p class="card-text">${productDetails.mainFeatures?.chipSet || 'Not found'}</p>
+                        <p class="card-text">${productDetails.mainFeatures?.sensors || 'Not found'}</p>
                         
                     </div>
                 </div>
             </div>  
             `;
-            main.appendChild(div)
+            for (const prop in productDetails.others) {
+                console.log(prop);
+            }
+            singleDetails.appendChild(div);
+
 
         })
 
 
 };
+
